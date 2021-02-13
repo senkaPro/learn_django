@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block title %}Register Account{% endblock %}
+{% block content %}
+{% if user.is_anonymous %}
+<h1>Create User:</h1>
+<form action="" method='post'>
+    {% csrf_token %}
+    {{form.as_p}}
+    <input type="submit" value="Create Account" />
+</form>
+{% else %}
+<li><a href={% url 'logout' %}>Logout</a></li>
+{% endif %}
+{% endblock %}

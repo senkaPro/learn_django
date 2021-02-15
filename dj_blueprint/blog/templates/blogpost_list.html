@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        {% for post in blogpost %}
+        <a href="{% url 'blogpost-edit' pk=post.pk%}">{{post.title}}</a>
+        <article name="post_body" id="" cols="30" rows="10">{{post.body}}</article>
+        {% endfor %}
+    </div>
+    <div class="col-md-4">
+        <!-- Other column -->
+    </div>
+</div>
+{% endblock content %}

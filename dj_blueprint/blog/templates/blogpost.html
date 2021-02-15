@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block title %}Add a blog post{% endblock %}
+{% block loggedin %}
+    {% if not has_blog %}
+    <li class="nav-item"><a href="{% url 'new-blog' %}" class="nav-link">Add Blog</a></li>
+    <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link"> Logout ? </a></li>
+    {% else %}
+    <li class="nav-item"><a href="{% url 'edit-blog' pk=blog.pk %}" class="nav-link">Edit blog settings</a></li>
+    <li class="nav-item"><a href="{% url 'new-blogpost' %}" class="nav-link">Add Blog Post</a></li>
+    <li class="nav-item"><a href="{% url 'logout' %}" class="nav-link"> Logout ? </a></li>
+    {% endif %}
+{% endblock loggedin %}
+{% block content %}
+<h1>Add Blog Post:</h1>
+<div class="row">
+    <div class="col-md-8">
+        <form action="" method="POST" role="form">
+            {% csrf_token %}
+            {% if form.subject.errors %}
+            <ol role="alertdialog">
+                {% for error in form.subject.errors %}
+                <li role="alert"><strong>{{ error|escape }}</strong></li>
+                {% endfor %}
+            </ol>
+            {% endif %}
+
+            {% for field in form %}
+            <div class="fieldWrapper form-group"
+                aria-required="{% if field.field.required %}'true'{% else %}'false'{% endif %}">
+                {{ field.label_tag }}{% if field.field.required %}<span class="required">*</span>{% endif %}
+                {{ field }}
+                {% if field.help_text %}
+                <p class="help">{{ field.help_text|safe }}</p>
+                {% endif %}
+            </div>
+            {% endfor %}
+            <input type="submit" class="btn btn-primary mb-2" value="Add Blog Post" />
+        </form>
+    </div>
+    <div class="col-md-4">
+        <!-- Other column -->
+    </div>
+</div>
+{% endblock content %}

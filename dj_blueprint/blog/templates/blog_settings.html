@@ -1,12 +1,10 @@
 {% extends 'base.html' %}
-{% block title %}Register Account{% endblock %}
+{% block title %}Add Blog {% endblock title %}
 {% block content %}
-{% if user.is_anonymous %}
-<h1>Create User:</h1>
-<div class="container">
+<h1>Blog settings:</h1>
 <div class="row">
-<div class="col-md-6">
-    <form action="{% url 'register' %}" method="POST" role="form">
+<div class="col-md-8">
+    <form action="" method="POST" role="form">
         {% csrf_token %}
         {% if form.subject.errors %}
         <ol role="alertdialog">
@@ -20,22 +18,16 @@
         <div class="fieldWrapper form-group" aria-required="{% if field.field.required %}'true'{% else %}'false'{% endif %}">
             {{ field.label_tag }}{% if field.field.required %}<span class="required">*</span>{% endif %}
             {{ field }}
-            {% if field.errors %}
-            <div class="alert alert-danger" role="alert"><p>{{ field.errors|safe}}</p></div>
+            {% if field.help_text %}
+            <p class="help">{{ field.help_text|safe }}</p>
             {% endif %}
         </div>
         {% endfor %}
-        
-        <input type="submit" class="btn btn-primary mt-4" value="Sign up" />
-    
+        <input type="submit" class="btn btn-primary mb-2" value="Submit"/>
     </form>
 </div>
-<div class="col-md-6">
+<div class="col-md-4">
     <!-- Other column -->
 </div>
 </div>
-</div>
-{% else %}
-<li><a href={% url 'logout' %}>Logout</a></li>
-{% endif %}
 {% endblock content %}

@@ -1,11 +1,13 @@
 {% extends 'base.html' %}
-{% block title %}Login Account{% endblock %}
+{% block title %}Edit Blog {% endblock title %}
+{% block loggedin %}
+<li class="nav-item"><a href="{% url 'new-blogpost' %}" class="nav-link">Add Blog Post</a></li>
+{% endblock loggedin %}
 {% block content %}
-<h1>Please login:</h1>
-<div class="container">
+<h1>Blog settings:</h1>
 <div class="row">
-    <div class="col-md-6">
-        <form action="{% url 'login' %}" method="POST" role="form">
+    <div class="col-md-8">
+        <form action="" method="POST" role="form">
             {% csrf_token %}
             {% if form.subject.errors %}
             <ol role="alertdialog">
@@ -14,26 +16,22 @@
                 {% endfor %}
             </ol>
             {% endif %}
-            
+
             {% for field in form %}
-            <div class="fieldWrapper form-group" aria-required="{% if field.field.required %}'true'{% else %}'false'{% endif %}">
+            <div class="fieldWrapper form-group"
+                aria-required="{% if field.field.required %}'true'{% else %}'false'{% endif %}">
                 {{ field.label_tag }}{% if field.field.required %}<span class="required">*</span>{% endif %}
                 {{ field }}
-                {% if field.errors %}
-                <div class="alert alert-danger" role="alert">
-                    <p>{{ field.errors|safe}}</p>
-                </div>
+                {% if field.help_text %}
+                <p class="help">{{ field.help_text|safe }}</p>
                 {% endif %}
             </div>
             {% endfor %}
-            
-            <input type="submit" class="btn btn-primary mt-4" value="Login" />
+            <input type="submit" class="btn btn-primary mb-2" value="Edit a blog" />
         </form>
     </div>
-    <div class="col-md-6">
+    <div class="col-md-4">
         <!-- Other column -->
     </div>
 </div>
-</div>
-
 {% endblock content %}

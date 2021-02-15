@@ -17,13 +17,15 @@ from django.contrib import admin
 from django.contrib.auth.views import LogoutView
 from django.views.generic import TemplateView
 from accounts.views import UserRegistrationView,UserLoginView
-from django.urls import path
+from django.urls import path, include
 from django.conf import settings
+from blog.views import HomeView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', TemplateView.as_view(template_name='base.html'), name='home'),
     path('signup/', UserRegistrationView.as_view(),name='register'),
     path('login/', UserLoginView.as_view(),name='login'),
     path('logout/', LogoutView.as_view(next_page=settings.LOGOUT_REDIRECT_URL), name='logout'),
+    path('', HomeView.as_view(), name='home'),
+    path('', include('blog.urls'), name='blog'),
 ]
